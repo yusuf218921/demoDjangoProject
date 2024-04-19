@@ -9,8 +9,14 @@ def course_list(request):
 def detail(request):
     return HttpResponse('Kurs Detay Sayfasi')
 
-def programming_list(request):
-    return HttpResponse('Programlama Kursları Listesi')
+def get_course_by_category(request, category):
+    text = ''
 
-def mobile_app_list(request):
-    return HttpResponse('Mobil Uygulama Kursları Listesi')
+    if (category == 'programlama'):
+        text = 'Pragramlama kurslarının Listesi'
+    elif (category == 'web-gelistirme'):
+        text = 'Web Gelistirme Kursları Listesi'
+    else:
+        text = 'Geçersiz kategori girildi'
+
+    return HttpResponse(text)
