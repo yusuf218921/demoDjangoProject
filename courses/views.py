@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
 # Create your views here.
 
@@ -21,11 +22,12 @@ def get_course_by_category_name(request, category_name):
         text = data[category_name]
         return HttpResponse(text)
     except:
-        HttpResponseNotFound("Geçersiz Kategori Girildi")
+        return HttpResponseNotFound("Geçersiz Kategori Girildi")
 
 def get_course_by_category_id(request, category_id):
     category_list = list(data.keys())
     if (category_id > len(category_list)):
-        HttpResponseNotFound("Geçersiz Kategori Girildi")
-    redirect_text = category_list[category_id - 1]
-    return redirect(f'/course/category/{redirect_text}')
+        return HttpResponseNotFound("Geçersiz Kategori Girildi")
+    category_name = category_list[category_id - 1]
+    redirect_text = reverse('courses_by_category_name', args=[category_name])
+    return redirect(redirect_text)
